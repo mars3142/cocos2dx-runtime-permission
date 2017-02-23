@@ -1,0 +1,8 @@
+*.iml
+proj.android-studio/app/obj
+local.properties
+proj.android-studio/.idea
+proj.android-studio/app/assets
+proj.android-studio/app/libs
+cocos2d/cocos/platform/android/libcocos2dx/build
+bin
