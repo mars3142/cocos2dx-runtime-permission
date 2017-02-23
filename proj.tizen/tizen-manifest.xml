@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.mars3142.cocos2dx.permission" version="1.0.0">
+    <ui-application appid="org.mars3142.cocos2dx.permission" exec="hellocpp" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>RuntimePermission</label>
+        <icon>RuntimePermission.png</icon>
+    </ui-application>
+</manifest>
