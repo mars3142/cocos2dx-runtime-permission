@@ -1,6 +1,8 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
+#include "ui/CocosGUI.h"
+
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -65,15 +67,28 @@ bool HelloWorld::init()
     this->addChild(label, 1);
 
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
+    auto permission = ui::Button::create("ButtonNormal.png", "ButtonSelected.png");
 
     // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    permission->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    
+    // register click event listener
+    permission->addClickEventListener(CC_CALLBACK_1(HelloWorld::permissionButtonCallback, this));
 
     // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    this->addChild(permission, 0);
     
     return true;
+}
+
+
+void HelloWorld::permissionButtonCallback(cocos2d::Ref *pSender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // TODO implement Android Runtime Permission behavior
+#else
+    MessageBox("Not Needed", "Your platform doesn't require a WRITE_PERMISSION");
+#endif
 }
 
 

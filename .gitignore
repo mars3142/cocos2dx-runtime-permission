@@ -6,3 +6,6 @@ proj.android-studio/app/assets
 proj.android-studio/app/libs
 cocos2d/cocos/platform/android/libcocos2dx/build
 bin
+cocos2d/build/cocos2d_libs.xcodeproj/xcuserdata
+proj.ios_mac/RuntimePermission.xcodeproj/project.xcworkspace
+proj.ios_mac/RuntimePermission.xcodeproj/xcuserdata
