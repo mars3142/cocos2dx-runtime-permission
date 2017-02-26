@@ -70,6 +70,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {        
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
+    
+    // reset to default
+    director->setContentScaleFactor(1);
 
     register_all_packages();
 
