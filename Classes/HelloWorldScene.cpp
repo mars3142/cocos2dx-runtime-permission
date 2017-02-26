@@ -57,7 +57,7 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
     
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
@@ -84,11 +84,15 @@ bool HelloWorld::init()
 
 void HelloWorld::permissionButtonCallback(cocos2d::Ref *pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // TODO implement Android Runtime Permission behavior
-#else
-    MessageBox("Not Needed", "Your platform doesn't require a WRITE_PERMISSION");
-#endif
+    askForPermission(CC_CALLBACK_1(HelloWorld::callback, this));
+}
+
+void HelloWorld::callback(bool granted) {
+    if (granted) {
+        label->setString("granted");
+    } else{
+        label->setString("denied");
+    }
 }
 
 
@@ -105,6 +109,4 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
-    
-    
 }
