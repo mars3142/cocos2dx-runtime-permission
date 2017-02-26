@@ -27,30 +27,47 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxHelper;
 
 public class AppActivity extends Cocos2dxActivity {
 
-    private static final String TAG = "AppActivity";
+    private static final int PERMISSION_REQUEST_CODE = 9001;
 
     public static native void callback(boolean granted);
 
     @Keep // Annotation for ProGuard not to delete
     public static void askForPermission() {
-        Log.d(TAG, "askForPermission() called");
-        callback(false);
+        if (!hasPermission()) {
+            ActivityCompat.requestPermissions(Cocos2dxHelper.getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_REQUEST_CODE);
+        }
     }
 
     @Keep // Annotation for ProGuard not to delete
     public static boolean hasPermission() {
         boolean result = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            result = (ContextCompat.checkSelfPermission(Cocos2dxHelper.getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+            result = (ContextCompat.checkSelfPermission(Cocos2dxHelper.getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         }
         return result;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                callback(grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+                break;
+        }
     }
 }
